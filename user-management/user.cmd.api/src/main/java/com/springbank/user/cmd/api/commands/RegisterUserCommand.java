@@ -1,5 +1,8 @@
 package com.springbank.user.cmd.api.commands;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import com.springbank.user.core.models.User;
@@ -25,5 +28,7 @@ public class RegisterUserCommand {
 	
 	// The command should carry the information required to undertake
 	// the action based on the expressed intent (Register User)
+	@NotNull(message = "No user data was provided")
+	@Valid
 	private User user;
 }

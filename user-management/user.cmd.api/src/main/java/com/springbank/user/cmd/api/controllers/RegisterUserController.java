@@ -2,6 +2,8 @@ package com.springbank.user.cmd.api.controllers;
 
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +36,7 @@ public class RegisterUserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<RegisterUserResponse> registerUser(@RequestBody RegisterUserCommand command) {
+	public ResponseEntity<RegisterUserResponse> registerUser(@RequestBody @Valid RegisterUserCommand command) {
 
 		command.setId(UUID.randomUUID().toString());
 
