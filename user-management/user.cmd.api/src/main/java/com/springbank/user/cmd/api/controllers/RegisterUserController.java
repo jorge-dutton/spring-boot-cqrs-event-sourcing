@@ -21,7 +21,8 @@ import com.springbank.user.cmd.api.dto.RegisterUserResponse;
 @RequestMapping(path = "/api/v1/registerUser")
 public class RegisterUserController {
 
-	private static final Logger LOG = LoggerFactory.getLogger(RegisterUserController.class);
+	private static final Logger LOG = LoggerFactory
+			.getLogger(RegisterUserController.class);
 
 	// The command gateway is an Axon mecanism
 	// that will dispatch the RegisterUserCommand.
@@ -36,21 +37,27 @@ public class RegisterUserController {
 	}
 
 	@PostMapping
-	public ResponseEntity<RegisterUserResponse> registerUser(@RequestBody @Valid RegisterUserCommand command) {
+	public ResponseEntity<RegisterUserResponse> registerUser(
+			@Valid @RequestBody RegisterUserCommand command) {
 
-		command.setId(UUID.randomUUID().toString());
+		var id = UUID.randomUUID().toString();
+		command.setId(id);
 
 		try {
 			// Send the command and wait for any response.
 			commandGateway.sendAndWait(command);
-			
-			return new ResponseEntity<>(new RegisterUserResponse("User successfully registered"), HttpStatus.OK);
+
+			return new ResponseEntity<>(new RegisterUserResponse(id,
+					"User successfully registered"), HttpStatus.OK);
 		} catch (Exception e) {
-			var safeErrorMessage = String.format("Error while processing register user request for id %s",
-					command.getId());
+			var safeErrorMessage = String.format(
+					"Error while processing register user request for id %s",
+					id);
 			LOG.error(e.getMessage());
 
-			return new ResponseEntity<>(new RegisterUserResponse(safeErrorMessage), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(
+					new RegisterUserResponse(id, safeErrorMessage),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

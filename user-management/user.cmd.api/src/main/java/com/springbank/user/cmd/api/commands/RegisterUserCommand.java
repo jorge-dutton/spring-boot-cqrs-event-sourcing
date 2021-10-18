@@ -28,7 +28,7 @@ public class RegisterUserCommand {
 	
 	// The command should carry the information required to undertake
 	// the action based on the expressed intent (Register User)
-	@NotNull(message = "No user data was provided")
+	@NotNull(message = "No user details were supplied")
 	@Valid
 	private User user;
 }

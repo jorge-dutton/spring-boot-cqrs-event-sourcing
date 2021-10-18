@@ -30,8 +30,7 @@ public class User {
 	@NotEmpty(message = "{user.lastname.empty}")
 	private String lastname;
 	
-	@NotEmpty(message = "{user.email.empty}")
-	@Email
+	@Email(message = "Incorrect email format")
 	private String email;
 	
 	@NotNull(message = "{user.account.null}")
